@@ -50,7 +50,9 @@
             <property name="group"
                       view="_minimal"/>
             <property name="parent"
-                      view="_minimal"/>
+                      view="_minimal">
+              <property name="sysTenantId"/>
+            </property>
             <property name="sysTenantId"/>
         </property>
     </view>
