@@ -28,7 +28,7 @@ public class TenantIdValidator implements Field.Validator {
 
     @Override
     public void validate(Object value) throws ValidationException {
-        if (StringUtils.isNotEmpty((String) value) && !((String) value).matches("[\\w|\\s]+"))
+        if (StringUtils.isNotEmpty((String) value) && !((String) value).matches("[\\w|\\s\\-]+"))
             throw new ValidationException(messages.getMessage(TenantIdValidator.class, "validation.invalidTenantId"));
     }
 }
