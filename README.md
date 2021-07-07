@@ -254,7 +254,7 @@ The following properties should be set in the `app.properties` and `web-app.prop
 **cubasdbmt.defaultTenantRoleName**
 
 * Enables providing a default user role for tenants.
-* Default value: `false`.
+* Default value: `default-tenant-role`.
 
 **cubasdbmt.defaultTenantParentGroup**
 
