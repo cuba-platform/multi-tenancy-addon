@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2008-2020 Haulmont.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.haulmont.addon.sdbmt.security.role;
 
 import com.haulmont.addon.sdbmt.entity.Tenant;
@@ -22,19 +6,15 @@ import com.haulmont.cuba.security.app.role.annotation.EntityAccess;
 import com.haulmont.cuba.security.app.role.annotation.EntityAttributeAccess;
 import com.haulmont.cuba.security.app.role.annotation.Role;
 import com.haulmont.cuba.security.app.role.annotation.ScreenAccess;
-import com.haulmont.cuba.security.entity.EntityOp;
-import com.haulmont.cuba.security.entity.Group;
-import com.haulmont.cuba.security.entity.User;
-import com.haulmont.cuba.security.entity.UserRole;
+import com.haulmont.cuba.security.entity.*;
 import com.haulmont.cuba.security.role.EntityAttributePermissionsContainer;
 import com.haulmont.cuba.security.role.EntityPermissionsContainer;
 import com.haulmont.cuba.security.role.ScreenPermissionsContainer;
 
-@Deprecated
-@Role(name = TenantsAdminRole.ROLE_NAME)
-public class TenantsAdminRole extends AnnotatedRoleDefinition {
+@Role(name = TenantUserManagerRole.ROLE_NAME)
+public class TenantUserManagerRole extends AnnotatedRoleDefinition {
 
-    public static final String ROLE_NAME = "tenant-admin-role";
+    public static final String ROLE_NAME = "tenant-user-manager";
 
     @EntityAccess(entityClass = Group.class,
             operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
@@ -46,6 +26,8 @@ public class TenantsAdminRole extends AnnotatedRoleDefinition {
             operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE})
     @EntityAccess(entityClass = UserRole.class,
             operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
+    @EntityAccess(entityName = "sec$Target",
+            operations = {EntityOp.CREATE, EntityOp.READ, EntityOp.UPDATE, EntityOp.DELETE})
     @Override
     public EntityPermissionsContainer entityPermissions() {
         return super.entityPermissions();
@@ -56,12 +38,14 @@ public class TenantsAdminRole extends AnnotatedRoleDefinition {
     @EntityAttributeAccess(entityClass = Tenant.class, modify = "*")
     @EntityAttributeAccess(entityClass = User.class, modify = "*")
     @EntityAttributeAccess(entityClass = UserRole.class, modify = "*")
+    @EntityAttributeAccess(entityName = "sec$Target", modify = "*")
     @Override
     public EntityAttributePermissionsContainer entityAttributePermissions() {
         return super.entityAttributePermissions();
     }
 
     @ScreenAccess(screenIds = {"tenant-management",
+            "administration",
             "cubasdbmt$Tenant.browse",
             "cubasdbmt$Tenant.edit",
             "sec$Role.browse",
@@ -80,6 +64,6 @@ public class TenantsAdminRole extends AnnotatedRoleDefinition {
 
     @Override
     public String getLocName() {
-        return "Tenant Admin";
+        return "Tenant User Manager";
     }
 }
